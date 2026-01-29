@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shalom Christian Institute | Empowering Leaders with a Biblical Worldview</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --brand-cyan: #22d3ee; 
+            --brand-purple: #7e22ce; 
+            --brand-bg: #0a0a0c; 
+            --brand-lavender: #d8b4fe; 
+            --card-bg: rgba(15, 15, 20, 0.7);
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --nav-blur: rgba(10, 10, 12, 0.9);
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-mode {
+            --brand-bg: #ffffff;
+            --card-bg: rgba(126, 34, 206, 0.05);
+            --text-main: #111827;
+            --text-dim: #4b5563;
+            --nav-blur: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(126, 34, 206, 0.1);
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--brand-bg); 
+            color: var(--text-main);
+            overflow-x: hidden; 
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* --- Custom Animations --- */
+        @keyframes floating {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(15px, 25px); }
+            100% { transform: translate(0, 0); }
+        }
+        .animate-float { animation: floating 15s ease-in-out infinite; }
+
+        @keyframes ken-burns {
+            0% { transform: scale(1.1); }
+            50% { transform: scale(1.2) rotate(0.5deg); }
+            100% { transform: scale(1.1); }
+        }
+        .animate-ken-burns { animation: ken-burns 30s ease-in-out infinite; }
+
+        @keyframes text-glow {
+            0%, 100% { filter: drop-shadow(0 0 2px rgba(34, 211, 238, 0.3)); }
+            50% { filter: drop-shadow(0 0 15px rgba(126, 34, 206, 0.5)); }
+        }
+        .animate-text-glow { animation: text-glow 4s ease-in-out infinite; }
+
+        /* Scroll Reveal Utility */
+        .reveal { opacity: 0; filter: blur(10px); transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+        .reveal-up { transform: translateY(30px); }
+        .reveal-left { transform: translateX(-30px); }
+        .reveal-right { transform: translateX(30px); }
+        .reveal.active { opacity: 1; transform: translate(0); filter: blur(0); }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border-color);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: var(--brand-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .text-shimmer {
+            background: linear-gradient(to right, var(--brand-cyan) 20%, var(--brand-lavender) 40%, var(--brand-purple) 60%, var(--brand-cyan) 80%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShimmer 6s linear infinite;
+        }
+        @keyframes textShimmer { to { background-position: 200% center; } }
+
+        .glow-blob {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        @media (min-width: 768px) {
+            .glow-blob { width: 600px; height: 600px; filter: blur(120px); }
+        }
+
+        body.light-mode .glow-blob { opacity: 0.05; }
+
+        @keyframes pulse-green {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .whatsapp-pulse { animation: pulse-green 2s infinite; }
+
+        select option { background-color: #111115; color: white; }
+        body.light-mode select option { background-color: #ffffff; color: #111827; }
+        
+        /* Logo Styles - Enlarged */
+        .logo-main {
+            height: 56px; /* Enlarged from 40px */
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        @media (min-width: 768px) { 
+            .logo-main { height: 80px; } /* Enlarged from 48px */
+        }
+        .logo-main:hover { transform: scale(1.05); }
+        .logo-placeholder {
+            background: linear-gradient(to br, var(--brand-purple), var(--brand-cyan));
+            color: white;
+            padding: 0.6rem 0.8rem;
+            border-radius: 0.75rem;
+            font-weight: 900;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 15px rgba(126, 34, 206, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Decor -->
+    <div class="glow-blob bg-purple-600 top-[-100px] left-[-100px] animate-float"></div>
+    <div class="glow-blob bg-cyan-600 bottom-[-100px] right-[-100px] animate-float" style="animation-delay: -5s;"></div>
+
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 bg-[#0a0a0c] z-[9999] flex items-center justify-center transition-opacity duration-500">
+        <div class="relative w-32 h-32 md:w-44 md:h-44 flex flex-col items-center justify-center">
+            <div class="absolute inset-0 border-4 border-white/5 rounded-full"></div>
+            <div class="absolute inset-0 border-4 border-t-[var(--brand-cyan)] rounded-full animate-spin"></div>
+            <img src="logo.png" alt="SCI Logo" class="w-16 h-16 md:w-24 md:h-24 object-contain relative z-10" onerror="this.outerHTML='<span class=\'font-black text-2xl md:text-3xl text-[var(--brand-purple)]\'>SCI</span>'">
+        </div>
+    </div>
+
+    <!-- Background Layer -->
+    <div class="fixed inset-0 z-[-2] overflow-hidden bg-black">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-20">
+            <source src="background.mp4" type="video/mp4">
+            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&q=80&w=2000" class="min-w-full min-h-full object-cover opacity-10" alt="Background" />
+        </video>
+        <div id="bg-gradient-layer" class="absolute inset-0 bg-gradient-to-b from-[var(--brand-bg)] via-transparent to-[var(--brand-bg)]"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 py-4 transition-all duration-700">
+        <div class="max-w-7xl mx-auto px-4 md:px-6">
+            <div class="flex justify-between items-center px-4 md:px-6 py-4 md:py-3 rounded-2xl md:rounded-3xl shadow-2xl border border-white/10 backdrop-blur-xl bg-black/40">
+                <div class="flex items-center space-x-3 md:space-x-4 group cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <div id="logo-container">
+                        <img src="logo.png" alt="SCI Logo" class="logo-main" onerror="this.outerHTML='<div class=\'logo-placeholder\'>SCI</div>'">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-black text-sm md:text-xl tracking-tighter uppercase leading-tight" style="color: var(--text-main);">SHALOM <span class="text-[var(--brand-purple)]">CHRISTIAN</span></span>
+                        <span class="text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase opacity-70" style="color: var(--brand-cyan);">Institute</span>
+                    </div>
+                </div>
+                
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#home" class="text-[10px] font-black uppercase tracking-widest hover:text-[var(--brand-cyan)] transition-colors" style="color: var(--text-main);">Home</a>
+                    <a href="#description" class="text-[10px] font-black uppercase tracking-widest hover:text-[var(--brand-cyan)] transition-colors" style="color: var(--text-main);">Overview</a>
+                    <a href="#about" class="text-[10px] font-black uppercase tracking-widest hover:text-[var(--brand-cyan)] transition-colors" style="color: var(--text-main);">Foundations</a>
+                    <a href="#leadership" class="text-[10px] font-black uppercase tracking-widest hover:text-[var(--brand-cyan)] transition-colors" style="color: var(--text-main);">Leadership</a>
+                    <a href="#programs" class="text-[10px] font-black uppercase tracking-widest hover:text-[var(--brand-cyan)] transition-colors" style="color: var(--text-main);">Programs</a>
+                    <div id="theme-btn" class="p-2 cursor-pointer text-[var(--brand-cyan)] hover:scale-125 transition-transform">
+                        <i data-lucide="sun"></i>
+                    </div>
+                    <a href="#registration" class="px-7 py-3 bg-gradient-to-r from-[var(--brand-purple)] to-[#4c1d95] text-white rounded-2xl font-bold hover:brightness-125 transition-all uppercase text-[9px] tracking-widest shadow-xl">Apply Online</a>
+                </div>
+
+                <div class="lg:hidden flex items-center space-x-3">
+                    <div id="theme-btn-mobile" class="p-2 cursor-pointer text-[var(--brand-cyan)]"><i data-lucide="sun" class="w-5 h-5"></i></div>
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg" style="color: var(--text-main);"><i data-lucide="menu" class="w-6 h-6"></i></button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden absolute top-full left-4 right-4 mt-2 backdrop-blur-3xl rounded-2xl p-6 border border-white/10 flex flex-col space-y-2 shadow-2xl bg-black/95">
+            <a href="#home" class="mobile-link font-bold uppercase text-[10px] tracking-widest py-4 border-b border-white/5">Home</a>
+            <a href="#description" class="mobile-link font-bold uppercase text-[10px] tracking-widest py-4 border-b border-white/5">Overview</a>
+            <a href="#about" class="mobile-link font-bold uppercase text-[10px] tracking-widest py-4 border-b border-white/5">Foundations</a>
+            <a href="#leadership" class="mobile-link font-bold uppercase text-[10px] tracking-widest py-4 border-b border-white/5">Leadership</a>
+            <a href="#programs" class="mobile-link font-bold uppercase text-[10px] tracking-widest py-4 border-b border-white/5">Programs</a>
+            <a href="#registration" class="mobile-link font-bold uppercase text-[10px] tracking-widest py-4 text-[var(--brand-cyan)]">Apply Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-20 md:pt-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 text-center lg:text-left grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div class="space-y-8 md:space-y-12 reveal reveal-left active">
+                <div class="inline-flex items-center space-x-3 px-4 md:px-6 py-2 md:py-3 bg-[var(--brand-purple)]/20 border border-[var(--brand-purple)]/30 rounded-full">
+                    <span class="w-2 h-2 bg-[var(--brand-cyan)] rounded-full animate-pulse shadow-[0_0_10px_#22d3ee]"></span>
+                    <span class="text-[var(--brand-lavender)] text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em]">Shaping Biblical Leaders</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl md:text-8xl font-black leading-[1.1] md:leading-[0.9] tracking-tighter uppercase" style="color: var(--text-main);">
+                    Empowering <br class="hidden md:block" />
+                    <span class="text-shimmer animate-text-glow">Global Influence.</span>
+                </h1>
+                <p class="text-base md:text-xl max-w-xl font-medium leading-relaxed text-slate-400 mx-auto lg:mx-0">
+                    Welcome to Shalom Christian Institute, an elite crucible for intellectual growth and spiritual excellence, designed for those called to lead with divine authority.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
+                    <a href="#registration" class="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-[var(--brand-purple)] to-[var(--brand-cyan)] text-white font-black rounded-2xl md:rounded-3xl shadow-[0_10px_30px_rgba(126,34,206,0.4)] hover:scale-105 transition-transform uppercase tracking-widest text-[10px]">
+                        Apply Online Now
+                    </a>
+                </div>
+            </div>
+            <div class="hidden lg:block relative reveal reveal-right active">
+                <div class="rounded-[5rem] overflow-hidden shadow-[0_0_60px_rgba(0,0,0,0.8)] border border-white/10 transform rotate-2 hover:rotate-0 transition-all duration-1000 aspect-square group">
+                    <img src="https://images.unsplash.com/photo-1541339907198-e08759dfc3ef?auto=format&fit=crop&q=80&w=1000" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[4000ms]" alt="Campus" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Description Section -->
+    <section id="description" class="py-20 md:py-40 relative reveal reveal-up">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center text-center lg:text-left">
+                <div class="space-y-6 md:space-y-10">
+                    <h2 class="text-[var(--brand-cyan)] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] text-[10px] md:text-[12px]">The SCI Essence</h2>
+                    <h3 class="text-3xl md:text-6xl font-black tracking-tighter uppercase leading-tight" style="color: var(--text-main);">A Sanctuary of <br class="hidden md:block"/><span class="text-shimmer">Transformational Wisdom.</span></h3>
+                    <p class="text-sm md:text-lg leading-relaxed text-slate-400">
+                        Shalom Christian Institute (SCI) is not merely an educational facility; it is a global beacon of spiritual rigor and intellectual advancement. We specialize in the development of "The Whole Person"—equipping individuals with knowledge and divine character.
+                    </p>
+                    <p class="text-sm md:text-lg leading-relaxed text-slate-400 hidden md:block">
+                        Our pedagogical approach bridges the gap between ancient Biblical truths and modern professional mandates. Graduates emerge as architects of culture, grounded in integrity and empowered by a Kingdom-first worldview.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4 md:gap-6">
+                    <div class="glass-card p-6 md:p-10 rounded-3xl md:rounded-[3rem] text-center border-b-4 border-[var(--brand-purple)]">
+                        <i data-lucide="shield-check" class="w-8 h-8 md:w-10 md:h-10 text-[var(--brand-cyan)] mx-auto mb-4"></i>
+                        <h4 class="font-black text-[10px] md:text-sm uppercase tracking-wider">Biblical Rigor</h4>
+                    </div>
+                    <div class="glass-card p-6 md:p-10 rounded-3xl md:rounded-[3rem] text-center border-b-4 border-[var(--brand-cyan)] mt-8 md:mt-12">
+                        <i data-lucide="zap" class="w-8 h-8 md:w-10 md:h-10 text-[var(--brand-lavender)] mx-auto mb-4"></i>
+                        <h4 class="font-black text-[10px] md:text-sm uppercase tracking-wider">Empowerment</h4>
+                    </div>
+                    <div class="glass-card p-6 md:p-10 rounded-3xl md:rounded-[3rem] text-center border-b-4 border-[var(--brand-lavender)]">
+                        <i data-lucide="globe" class="w-8 h-8 md:w-10 md:h-10 text-[var(--brand-purple)] mx-auto mb-4"></i>
+                        <h4 class="font-black text-[10px] md:text-sm uppercase tracking-wider">Global Impact</h4>
+                    </div>
+                    <div class="glass-card p-6 md:p-10 rounded-3xl md:rounded-[3rem] text-center border-b-4 border-white/20 mt-8 md:mt-12">
+                        <i data-lucide="heart" class="w-8 h-8 md:w-10 md:h-10 text-white mx-auto mb-4"></i>
+                        <h4 class="font-black text-[10px] md:text-sm uppercase tracking-wider">Integrity</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Foundations Section -->
+    <section id="about" class="py-20 md:py-40 bg-black/20 relative reveal reveal-up">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 md:mb-32">
+                <h2 class="text-[var(--brand-cyan)] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] text-[10px] md:text-[12px] mb-4 md:mb-6">Our DNA</h2>
+                <h3 class="text-3xl md:text-7xl font-black tracking-tighter uppercase text-white leading-none">Vision, Mission <br/>& <span class="text-shimmer">Values.</span></h3>
+                <div class="w-20 md:w-32 h-1.5 bg-gradient-to-r from-[var(--brand-purple)] to-[var(--brand-cyan)] mx-auto rounded-full mt-6 md:mt-10"></div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start mb-16 md:mb-32">
+                <div class="space-y-6 md:space-y-12">
+                    <div class="glass-card p-8 md:p-12 rounded-3xl md:rounded-[4rem] border-l-8 border-[var(--brand-purple)] relative overflow-hidden group">
+                        <i data-lucide="eye" class="absolute right-[-20px] top-[-20px] w-24 h-24 md:w-40 md:h-40 opacity-5"></i>
+                        <h4 class="font-black uppercase tracking-widest text-[10px] md:text-sm mb-4 md:mb-6 text-[var(--brand-cyan)] flex items-center gap-3">
+                            <i data-lucide="eye" class="w-4 h-4 md:w-5 md:h-5"></i> Vision
+                        </h4>
+                        <p class="text-base md:text-2xl font-medium leading-relaxed italic" style="color: var(--text-main);">
+                            "To Empower Leaders to Influence Society in all Spheres with Biblical World View through Inspiration Engagement."
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-8 md:p-12 rounded-3xl md:rounded-[4rem] border-l-8 border-[var(--brand-cyan)] relative overflow-hidden group">
+                        <i data-lucide="target" class="absolute right-[-20px] top-[-20px] w-24 h-24 md:w-40 md:h-40 opacity-5"></i>
+                        <h4 class="font-black uppercase tracking-widest text-[10px] md:text-sm mb-4 md:mb-6 text-[var(--brand-purple)] flex items-center gap-3">
+                            <i data-lucide="target" class="w-4 h-4 md:w-5 md:h-5"></i> Mission
+                        </h4>
+                        <p class="text-sm md:text-base leading-relaxed" style="color: var(--text-dim);">
+                            To Provide Rigorous Biblical Education and Professional Mentorship that Equips and Transform Students to Integrate Faith into Every Vocation, Engaging Culture with Divine Wisdom, Integrity, and Inspired Leadership bringing Glory to God Almighty.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-8 md:space-y-12">
+                    <h4 class="font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[10px] md:text-[12px] text-[var(--brand-lavender)] text-center lg:text-left">Institutional Values</h4>
+                    <div class="grid grid-cols-2 gap-3 md:gap-6">
+                        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl text-center"><h5 class="font-black uppercase text-[8px] md:text-[10px] text-[var(--brand-cyan)] tracking-widest">Integrity</h5></div>
+                        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl text-center"><h5 class="font-black uppercase text-[8px] md:text-[10px] text-[var(--brand-purple)] tracking-widest">Respect</h5></div>
+                        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl text-center"><h5 class="font-black uppercase text-[8px] md:text-[10px] text-[var(--brand-lavender)] tracking-widest">Inspiration</h5></div>
+                        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl text-center"><h5 class="font-black uppercase text-[8px] md:text-[10px] text-[var(--brand-cyan)] tracking-widest">Collaboration</h5></div>
+                        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl text-center"><h5 class="font-black uppercase text-[8px] md:text-[10px] text-[var(--brand-purple)] tracking-widest">Ubuntu</h5></div>
+                        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl text-center"><h5 class="font-black uppercase text-[8px] md:text-[10px] text-[var(--brand-lavender)] tracking-widest">Excellence</h5></div>
+                        <div class="glass-card p-4 md:p-6 rounded-2xl md:rounded-3xl text-center col-span-2"><h5 class="font-black uppercase text-[8px] md:text-[10px] text-white tracking-widest">Spiritual & Culturally Responsive</h5></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divisions Section -->
+    <section id="divisions" class="py-20 md:py-40 relative reveal reveal-up">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 md:mb-24">
+                <h2 class="text-[var(--brand-purple)] font-black tracking-[0.4em] md:tracking-[0.6em] uppercase text-[10px] md:text-[12px] mb-4 md:mb-6">Internal Framework</h2>
+                <h3 class="text-3xl md:text-7xl font-black tracking-tighter uppercase text-white leading-none">Divisions & <span class="text-shimmer">Departments.</span></h3>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3.5rem] border-t-2 border-white/5">
+                    <h4 class="text-sm md:text-lg font-black uppercase text-[var(--brand-cyan)] leading-tight">Research, Innovation, Development, Engagement and Partnerships</h4>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3.5rem] border-t-2 border-white/5">
+                    <h4 class="text-sm md:text-lg font-black uppercase text-[var(--brand-cyan)] leading-tight">Institutional Planning and Support</h4>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3.5rem] border-t-2 border-white/5">
+                    <h4 class="text-sm md:text-lg font-black uppercase text-[var(--brand-cyan)] leading-tight">Academic Administration, Teaching and Learning</h4>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3.5rem] border-t-2 border-white/5">
+                    <h4 class="text-sm md:text-lg font-black uppercase text-[var(--brand-cyan)] leading-tight">Student Affairs</h4>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3.5rem] border-t-2 border-white/5">
+                    <h4 class="text-sm md:text-lg font-black uppercase text-[var(--brand-cyan)] leading-tight">Finance and Human Resources</h4>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3.5rem] border-t-2 border-white/5">
+                    <h4 class="text-sm md:text-lg font-black uppercase text-[var(--brand-cyan)] leading-tight">Faculty of Theology and Religious Studies</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section id="leadership" class="py-20 md:py-40 bg-black/20 relative reveal reveal-up">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 md:mb-24">
+                <h2 class="text-[var(--brand-cyan)] font-black uppercase tracking-[0.4em] md:tracking-[0.6em] text-[10px] md:text-[12px] mb-4 md:mb-6">Institutional Pillars</h2>
+                <h3 class="text-3xl md:text-7xl font-black tracking-tighter uppercase text-white leading-none">Leadership & <span class="text-shimmer">Management.</span></h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-12 md:mb-20">
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] text-center border-t-4 border-[var(--brand-purple)]">
+                    <h4 class="text-lg md:text-xl font-black text-white uppercase tracking-tight">Prof JS Khoza</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-[var(--brand-cyan)] uppercase tracking-widest mt-2">Chancellor</p>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] text-center border-t-4 border-[var(--brand-cyan)]">
+                    <h4 class="text-lg md:text-xl font-black text-white uppercase tracking-tight">Dr AF Sithole</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-[var(--brand-purple)] uppercase tracking-widest mt-2">Rector</p>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] text-center border-t-4 border-[var(--brand-lavender)]">
+                    <h4 class="text-lg md:text-xl font-black text-white uppercase tracking-tight">Ms TK Khoza</h4>
+                    <p class="text-[10px] font-bold text-[var(--brand-cyan)] uppercase tracking-widest mt-2 text-[9px] md:text-[10px]">Registrar (Acting)</p>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] text-center border-t-4 border-[var(--brand-purple)]">
+                    <h4 class="text-lg md:text-xl font-black text-white uppercase tracking-tight">Prof MA Ribeiro</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-[var(--brand-cyan)] uppercase tracking-widest mt-2">Dean of Faculty</p>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] text-center border-t-4 border-[var(--brand-cyan)]">
+                    <h4 class="text-lg md:text-xl font-black text-white uppercase tracking-tight">Dr SG Dlamini</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-[var(--brand-purple)] uppercase tracking-widest mt-2">Executive Director: Registration</p>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] text-center border-t-4 border-[var(--brand-lavender)]">
+                    <h4 class="text-lg md:text-xl font-black text-white uppercase tracking-tight">Prof SM Magagula</h4>
+                    <p class="text-[9px] md:text-[10px] font-bold text-[var(--brand-cyan)] uppercase tracking-widest mt-2">Executive Director: Ordination</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] flex items-center gap-6 bg-white/5">
+                    <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-[var(--brand-purple)]/20 flex items-center justify-center text-[var(--brand-cyan)] flex-shrink-0"><i data-lucide="map-pin"></i></div>
+                    <div>
+                        <h5 class="text-base md:text-lg font-black text-white uppercase">Apostle TV Gubisi</h5>
+                        <p class="text-[8px] md:text-[9px] font-bold text-slate-500 uppercase tracking-widest">Campus Principal (New Dawn)</p>
+                    </div>
+                </div>
+                <div class="glass-card p-8 md:p-10 rounded-2xl md:rounded-[3rem] flex items-center gap-6 bg-white/5">
+                    <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-[var(--brand-cyan)]/20 flex items-center justify-center text-[var(--brand-purple)] flex-shrink-0"><i data-lucide="map-pin"></i></div>
+                    <div>
+                        <h5 class="text-base md:text-lg font-black text-white uppercase">Dr G Mashaba</h5>
+                        <p class="text-[8px] md:text-[9px] font-bold text-slate-500 uppercase tracking-widest">Campus Principal (Thembisa)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive Programs Section -->
+    <section id="programs" class="py-20 md:py-40 relative reveal reveal-up">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 md:mb-32">
+                <h2 class="text-[var(--brand-lavender)] font-black tracking-[0.4em] md:tracking-[0.6em] uppercase text-[10px] md:text-[12px] mb-4 md:mb-6">Academic Directory</h2>
+                <h3 class="text-3xl md:text-7xl font-black tracking-tighter uppercase text-white leading-none">Courses & <span class="text-shimmer">Programs.</span></h3>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+                <div class="space-y-8 md:space-y-12">
+                    <div class="flex items-center space-x-6 border-l-8 border-[var(--brand-purple)] pl-6 md:pl-8 py-4 md:py-6">
+                        <i data-lucide="graduation-cap" class="text-[var(--brand-cyan)] w-10 h-10 md:w-14 md:h-14"></i>
+                        <h4 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-white">Full Qualifications</h4>
+                    </div>
+                    <div class="grid gap-3 md:gap-4">
+                        <div class="glass-card p-4 md:p-5 rounded-2xl md:rounded-3xl flex items-center"><span class="text-[10px] md:text-xs font-bold uppercase tracking-wide">Certificate in Christian Ministry</span></div>
+                        <div class="glass-card p-4 md:p-5 rounded-2xl md:rounded-3xl flex items-center"><span class="text-[10px] md:text-xs font-bold uppercase tracking-wide">Diploma in Christian Ministry / Theology</span></div>
+                        <div class="glass-card p-4 md:p-5 rounded-2xl md:rounded-3xl flex items-center"><span class="text-[10px] md:text-xs font-bold uppercase tracking-wide">Bachelor's degree in Theology / Religious Studies</span></div>
+                        <div class="glass-card p-4 md:p-5 rounded-2xl md:rounded-3xl flex items-center"><span class="text-[10px] md:text-xs font-bold uppercase tracking-wide">Bachelor of Theology Honour's degree</span></div>
+                        <div class="glass-card p-4 md:p-5 rounded-2xl md:rounded-3xl flex items-center"><span class="text-[10px] md:text-xs font-bold uppercase tracking-wide">Master of Theology degree</span></div>
+                        <div class="glass-card p-4 md:p-5 rounded-2xl md:rounded-3xl flex items-center border-2 border-[var(--brand-purple)]"><span class="text-[10px] md:text-xs font-black uppercase text-[var(--brand-lavender)] tracking-wide">Doctor of Philosophy in Biblical Studies</span></div>
+                    </div>
+                </div>
+
+                <div class="space-y-8 md:space-y-12">
+                    <div class="flex items-center space-x-6 border-l-8 border-[var(--brand-cyan)] pl-6 md:pl-8 py-4 md:py-6">
+                        <i data-lucide="award" class="text-[var(--brand-purple)] w-10 h-10 md:w-14 md:h-14"></i>
+                        <h4 class="text-xl md:text-3xl font-black uppercase tracking-tighter text-white">Short Courses</h4>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Children Ministry</div>
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Youth Ministry</div>
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Prison Ministry</div>
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Worship (Music) Ministry</div>
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Woman Ministry</div>
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Marriage & Family Support</div>
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Church Administration</div>
+                        <div class="glass-card p-4 rounded-xl text-[9px] md:text-[10px] font-black uppercase tracking-widest border-l-4 border-[var(--brand-cyan)]">Life Coaching / Mentorship</div>
+                        <div class="glass-card p-6 rounded-2xl text-[9px] md:text-[10px] font-black uppercase tracking-widest text-[var(--brand-lavender)] sm:col-span-2 text-center border-t-2 border-[var(--brand-purple)]">Professional Event Management</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Affiliation Section -->
+    <section id="accreditation" class="py-20 md:py-40 bg-black/40 relative reveal reveal-up">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 md:mb-24">
+                <h2 class="text-[var(--brand-purple)] font-black tracking-[0.4em] md:tracking-[0.6em] uppercase text-[10px] md:text-[12px] mb-4 md:mb-6">Global Partners</h2>
+                <h3 class="text-3xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">Affiliation & <span class="text-shimmer">Accreditation.</span></h3>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-3 md:gap-6">
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--brand-cyan)]">Implementing TICU Curriculum</div>
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--brand-lavender)]">RWU</div>
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--brand-purple)]">ROKU</div>
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--brand-cyan)]">ITII</div>
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-white">Extension of WNL Network Academy</div>
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--brand-lavender)]">SACQAAC</div>
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--brand-purple)]">REFORMA</div>
+                <div class="glass-card px-6 md:px-10 py-4 md:py-6 rounded-xl md:rounded-2xl font-black text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] text-[var(--brand-cyan)]">ICOFCSU</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration -->
+    <section id="registration" class="py-20 md:py-40 reveal reveal-up">
+        <div class="max-w-7xl mx-auto px-4 md:px-6">
+            <div class="glass-card rounded-[2.5rem] md:rounded-[5rem] overflow-hidden grid lg:grid-cols-2 border border-[var(--brand-purple)]/20 shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+                <div class="p-10 md:p-20 space-y-8 md:space-y-12 bg-gradient-to-br from-[#0c0c0e] to-[#1a0b25]">
+                    <div class="inline-flex items-center space-x-3 px-5 py-2.5 bg-[var(--brand-cyan)]/10 border border-[var(--brand-cyan)]/20 rounded-full">
+                        <i data-lucide="lock" class="w-4 h-4 text-[var(--brand-cyan)]"></i>
+                        <span class="text-[9px] font-black uppercase text-[var(--brand-cyan)] tracking-widest">Secure Enrollment Terminal</span>
+                    </div>
+                    <h3 class="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-[0.9]" style="color: var(--text-main);">Online <br /><span class="text-shimmer">Enrollment.</span></h3>
+                    <p class="text-slate-400 font-medium italic text-sm md:text-base">Empowering Leaders | Biblical Excellence</p>
+                </div>
+
+                <div class="bg-white/5 p-8 md:p-16">
+                    <form id="enroll-form" action="https://formspree.io/f/mkoreavb" method="POST" class="space-y-4 md:space-y-6">
+                        <input type="text" name="name" placeholder="Full Name & Surname" class="w-full bg-black/40 border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-5 outline-none focus:border-[var(--brand-cyan)] transition-all text-white text-sm" required />
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                            <input type="text" name="identification" placeholder="ID / Passport" class="w-full bg-black/40 border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-5 outline-none focus:border-[var(--brand-cyan)] transition-all text-white text-sm" required />
+                            <input type="tel" name="phone" placeholder="Phone Number" class="w-full bg-black/40 border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-5 outline-none focus:border-[var(--brand-cyan)] transition-all text-white text-sm" required />
+                        </div>
+                        <input type="email" name="email" placeholder="Email Address" class="w-full bg-black/40 border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-5 outline-none focus:border-[var(--brand-cyan)] transition-all text-white text-sm" required />
+
+                        <select name="program" class="w-full bg-[#111115] border border-white/10 rounded-xl md:rounded-2xl p-4 md:p-5 outline-none focus:border-[var(--brand-cyan)] text-white/60 text-xs cursor-pointer" required>
+                            <option value="" disabled selected>Select Pathway...</option>
+                            <optgroup label="Academic Degrees">
+                                <option value="Cert Christian Ministry">Certificate in Christian Ministry</option>
+                                <option value="Dip Theology">Diploma in Christian Ministry/Theology</option>
+                                <option value="B.Theology">Bachelor of Theology</option>
+                                <option value="B.Theology Honours">B.Theology Honours</option>
+                                <option value="M.Theology">Master of Theology</option>
+                                <option value="PhD Biblical Studies">PhD in Biblical Studies</option>
+                            </optgroup>
+                            <optgroup label="Short Courses">
+                                <option value="Youth Ministry">Youth Ministry</option>
+                                <option value="Worship Ministry">Worship (Music) Ministry</option>
+                                <option value="Marriage Support">Marriage & Family Support</option>
+                                <option value="Life Coaching">Life Coaching / Mentorship</option>
+                                <option value="Event Management">Professional Event Management</option>
+                            </optgroup>
+                        </select>
+
+                        <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-[var(--brand-purple)] to-[var(--brand-cyan)] text-white font-black py-5 md:py-6 rounded-2xl md:rounded-3xl shadow-2xl hover:brightness-125 transition-all uppercase tracking-[0.3em] md:tracking-[0.4em] text-[10px] md:text-[11px] mt-4">
+                            Execute Specification
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-20 md:py-40 border-t border-white/5 relative bg-[#060608]">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-20 text-center lg:text-left">
+            <div class="col-span-1 lg:col-span-2 space-y-8 md:space-y-10 text-white">
+                <div class="flex flex-col md:flex-row items-center justify-center lg:justify-start space-y-4 md:space-y-0 md:space-x-6">
+                    <img src="logo.png" alt="SCI Logo" class="logo-main" onerror="this.style.display='none'">
+                    <h4 class="text-2xl md:text-3xl font-black tracking-tighter uppercase leading-none">SHALOM <br /><span class="text-[var(--brand-cyan)]">CHRISTIAN INSTITUTE</span></h4>
+                </div>
+                <div class="space-y-4 md:space-y-6">
+                    <p class="text-xs md:text-sm text-slate-400 flex flex-col md:flex-row items-center justify-center lg:justify-start gap-2 md:gap-4 leading-relaxed">
+                        <i data-lucide="map-pin" class="text-[var(--brand-cyan)] w-5 h-5 hidden md:block"></i> Ligibholi street, 1713, Matsulu, 1203
+                    </p>
+                    <p class="text-xs md:text-sm text-slate-400 flex flex-col md:flex-row items-center justify-center lg:justify-start gap-2 md:gap-4">
+                        <i data-lucide="phone" class="text-[var(--brand-cyan)] w-5 h-5 hidden md:block"></i> 060 759 2929
+                    </p>
+                </div>
+            </div>
+            <div class="space-y-8">
+                <h5 class="font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[10px] text-[var(--brand-lavender)]">Registry Support</h5>
+                <ul class="space-y-4 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                    <li class="hover:text-white transition-colors cursor-pointer break-all">info@shalomchristianinstitute.co.za</li>
+                    <li class="hover:text-white transition-colors cursor-pointer break-all">exams@shalomchristianinstitute.co.za</li>
+                    <li class="hover:text-white transition-colors cursor-pointer break-all">dean@shalomchristianinstitute.co.za</li>
+                </ul>
+            </div>
+            <div class="space-y-8">
+                <h5 class="font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-[10px] text-white/20">Institutional Legacy</h5>
+                <p class="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-slate-600 leading-relaxed italic">Transformational Education | Inspired Leadership bringing Glory to God Almighty</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/27607592929" class="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-[60] bg-[#25D366] text-white w-14 h-14 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all whatsapp-pulse" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" class="md:w-12 md:h-12" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            function toggleTheme() {
+                document.body.classList.toggle('light-mode');
+                const isLight = document.body.classList.contains('light-mode');
+                const icons = [document.getElementById('theme-btn'), document.getElementById('theme-btn-mobile')];
+                icons.forEach(btn => {
+                    if (btn) {
+                        const svg = btn.querySelector('svg');
+                        if (svg) svg.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+                    }
+                });
+                lucide.createIcons();
+            }
+
+            const themeBtn = document.getElementById('theme-btn');
+            const themeBtnMobile = document.getElementById('theme-btn-mobile');
+            if (themeBtn) themeBtn.onclick = toggleTheme;
+            if (themeBtnMobile) themeBtnMobile.onclick = toggleTheme;
+
+            const observerOptions = { threshold: 0.15 };
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                window.addEventListener('load', () => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => preloader.style.display = 'none', 500);
+                });
+            }
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    mobileMenu.classList.toggle('hidden');
+                };
+            }
+
+            document.addEventListener('click', () => {
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            const enrollForm = document.getElementById('enroll-form');
+            const submitBtn = document.getElementById('submit-btn');
+
+            if (enrollForm) {
+                enrollForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const originalText = submitBtn.innerText;
+                    submitBtn.innerText = "TRANSMITTING...";
+                    submitBtn.disabled = true;
+
+                    const formData = new FormData(enrollForm);
+                    
+                    try {
+                        const response = await fetch(enrollForm.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+
+                        if (response.ok) {
+                            showSuccess();
+                            enrollForm.reset();
+                        } else {
+                            const data = await response.json();
+                            showErrorModal(data.errors ? data.errors.map(err => err.message).join(", ") : "Transmission failure.");
+                        }
+                    } catch (error) {
+                        showErrorModal("Network connection failed.");
+                    } finally {
+                        submitBtn.innerText = originalText;
+                        submitBtn.disabled = false;
+                    }
+                });
+            }
+        });
+
+        function showSuccess() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-2xl flex items-center justify-center z-[100] p-6 text-white text-center';
+            modal.innerHTML = `
+                <div class="glass-card bg-white/5 rounded-[2.5rem] md:rounded-[4rem] p-10 md:p-20 max-w-xl w-full border-[var(--brand-cyan)]/40 shadow-2xl">
+                    <div class="w-16 h-16 md:w-24 md:h-24 bg-gradient-to-r from-[var(--brand-purple)] to-[var(--brand-cyan)] rounded-full flex items-center justify-center mx-auto mb-8 md:mb-10 shadow-2xl">
+                        <i data-lucide="check-circle-2" class="w-8 h-8 md:w-12 md:h-12 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl md:text-4xl font-black mb-4 md:mb-6 uppercase tracking-tighter">Transmission Successful</h3>
+                    <p class="text-slate-400 text-sm md:text-base mb-8 md:mb-12 leading-relaxed">Your application specifications have been securely transmitted to the SCI terminal. Our admissions board will evaluate your documentation shortly.</p>
+                    <button id="close-modal" class="w-full bg-[var(--brand-cyan)] text-black font-black py-4 md:py-6 rounded-xl md:rounded-3xl uppercase tracking-[0.3em] md:tracking-[0.4em] text-[10px]">Acknowledge</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            lucide.createIcons();
+            document.getElementById('close-modal').onclick = () => { document.body.removeChild(modal); };
+        }
+
+        function showErrorModal(message) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-2xl flex items-center justify-center z-[100] p-6 text-white text-center';
+            modal.innerHTML = `
+                <div class="glass-card bg-white/5 rounded-[2.5rem] md:rounded-[4rem] p-10 md:p-20 max-w-xl w-full border-red-500/40 shadow-2xl">
+                    <div class="w-24 h-24 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-10 shadow-2xl">
+                        <i data-lucide="alert-triangle" class="w-12 h-12 text-white"></i>
+                    </div>
+                    <h3 class="text-2xl md:text-4xl font-black mb-4 md:mb-6 uppercase tracking-tighter text-red-400">Transmission Failed</h3>
+                    <p class="text-slate-400 text-sm md:text-base mb-8 md:mb-12 leading-relaxed">${message}</p>
+                    <button id="close-error-modal" class="w-full bg-red-600 text-white font-black py-6 rounded-3xl uppercase tracking-[0.3em] md:tracking-[0.4em] text-[10px]">Retry</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            lucide.createIcons();
+            document.getElementById('close-error-modal').onclick = () => { document.body.removeChild(modal); };
+        }
+    </script>
+</body>
+</html>
